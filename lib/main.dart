@@ -1,18 +1,26 @@
+import 'package:app2/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:smoodhconnect_teacherapp/Screens/login_page.dart';
+import 'package:app2/Screens/start_screen.dart';
+import 'package:app2/theme.dart';
+import 'package:sizer/sizer.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: LoginPage(),
-    );
+    return Sizer(builder: (context, orientation, device) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'RVCE Student App',
+        theme: CustomTheme().baseTheme,
+        initialRoute: StartScreen.routeName,
+        routes: routes,
+      );
+    });
   }
 }
