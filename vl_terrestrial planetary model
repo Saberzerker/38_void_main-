@@ -1,0 +1,78 @@
+import turtle
+import time
+from math import *
+
+#the background
+bg = turtle.Screen()
+bg.setup(1200,1200)
+bg.bgcolor(0,0,0)
+bg.tracer(0)#finish the while loop after creating the objrcts and calling functions
+
+#converting color assignment to rgb from strings
+turtle.colormode(255)
+
+
+#the sun
+helios = turtle.Turtle()
+helios.shape("circle")
+helios.shapesize(5,5)
+helios.color(255,255,0)
+
+#any body with a origin star to revolve around, origin refers to origin star, radius refers to the distance from the origin, size refers to the radius of the planet
+class Planet(turtle.Turtle):
+    def __init__(self, radius, arg, size, origin):
+        super().__init__(shape = 'circle')
+
+        #graphic design for planets, in place of the circle, we use the images to replace the turtle, later parts of development
+        self.radius = radius
+        self.color(arg)
+        self.size = size
+        self.shapesize(size,size)
+        self.up()
+        self.angle = 0
+        self.origin = origin
+
+    def move(self):
+        x = self.radius*cos(self.angle)
+        y = self.radius*sin(self.angle)
+
+        self.goto(self.origin.xcor()+x, self.origin.ycor()+y)
+
+
+#creating classes for terrestrial planets
+earth = Planet(300, (57, 132, 255), 1, helios)
+mercury = Planet(110, (110, 143, 191), 0.6, helios)
+venus = Planet(180, (207, 83, 7), 0.8, helios)
+mars = Planet(500, (203, 31, 0), 0.9, helios)
+
+#creating classes for the natural satellites with their parent planet as their respective origin
+moon = Planet(40,(227,227,227), 0.2, earth)
+phobos = Planet(40, (187, 187, 187), 0.2, mars)
+deimos = Planet(35, (255, 255, 255), 0.2, mars)
+
+non_star_objects = [mercury, venus, earth, mars, moon, phobos, deimos]
+
+
+
+
+#calling the move functions for all the non star objects
+while True:
+    bg.update()
+    for planet in non_star_objects:
+        
+        planet.move()
+    
+
+
+#speed of the planetary movement decided by the angulsr change with time
+
+    mercury.angle += 0.05
+    venus.angle += 0.03
+    earth.angle += 0.01
+    mars.angle += 0.007
+
+    moon.angle += 0.06
+    phobos.angle += 0.06
+    deimos.angle += 0.08
+
+    time.sleep(0.01)
